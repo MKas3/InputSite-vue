@@ -14,78 +14,92 @@
         <title>Input site</title>
     </head>
     <body>
-        <div id="app">
-            <form class="input-group mb-3 ol-input">
+        <div id="app" v-cloak>
+            <form class="input-group mx-auto w-50">
                 <input
                     type="text"
                     class="form-control"
                     placeholder="Enter a list item"
                     v-model="inputValue"
-                    @keypress.Enter="addNewItem($event)"
+                    @keypress.Enter.prevent="addNewItem"
                 />
                 <button
                     type="button"
                     class="btn btn-primary"
-                    @click="addNewItem"
+                    @click.prevent="addNewItem"
                 >
                     Add
                 </button>
             </form>
 
-            <div class="form-check" v-for="(sorting, index) in sortings">
-                <input
-                    class="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    checked
-                    v-on:input="changeSorting(index)"
-                />
-                <label class="form-check-label" for="flexRadioDefault1">
-                    {{ sorting }}
-                </label>
+            <div class="container w-50">
+                <div
+                    class="form-check text-center my-2"
+                    v-for="(sorting, index) in sortings"
+                >
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        checked
+                        v-on:input="changeSorting(index)"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        {{ sorting }}
+                    </label>
+                </div>
             </div>
 
-            <div class="main-ol">
-                <h1>Items list</h1>
-                <ol>
-                    <li v-for="item in items" :data-id="item.id">
-                        <label v-if="!item.isEdited">{{ item.text }}</label>
+            <div class="p-3">
+                <h1 class="text-center">Items list</h1>
+                <ol class="main-ol container w-50">
+                    <li
+                        class="col text-center pb-1"
+                        v-for="item in items"
+                        :data-id="item.id"
+                    >
+                        <label
+                            class="text-break text-start w-50"
+                            v-show="!item.isEdited"
+                            >{{ item.text }}</label
+                        >
                         <input
+                            class="w-50"
                             v-model="item.inputValue"
                             @keypress.Enter="acceptRenaming(item)"
-                            v-if="item.isEdited"
+                            v-show="item.isEdited"
                         />
                         <button
-                            class="btn btn-outline-danger btn-sm"
-                            type="button"
-                            @click="removeItem($event, item.id)"
-                            v-if="!item.isEdited"
-                        >
-                            X
-                        </button>
-                        <button
-                            class="btn btn-outline-secondary btn-sm"
+                            class="btn btn-outline-secondary btn-sm p-1 me-1"
                             type="button"
                             @click="activeEditing(item)"
-                            v-if="!item.isEdited"
+                            v-show="!item.isEdited"
                         >
                             Edit
                         </button>
                         <button
-                            class="btn btn-outline-success btn-sm"
+                            class="btn btn-outline-danger btn-sm p-1 me-1"
                             type="button"
-                            @click="acceptRenaming(item)"
-                            v-if="item.isEdited"
+                            @click="removeItem(item)"
+                            v-show="!item.isEdited"
                         >
-                            OK
+                            X
                         </button>
                         <button
-                            class="btn btn-outline-danger btn-sm"
+                            class="btn btn-outline-danger btn-sm p-1 me-1"
                             type="button"
                             @click="cancelRenaming(item)"
-                            v-if="item.isEdited"
+                            v-show="item.isEdited"
                         >
                             Cancel
+                        </button>
+                        <button
+                            class="btn btn-outline-success btn-sm p-1 me-1"
+                            type="button"
+                            @click="acceptRenaming(item)"
+                            v-show="item.isEdited"
+                        >
+                            OK
                         </button>
                     </li>
                 </ol>

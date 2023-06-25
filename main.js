@@ -5,27 +5,23 @@ const SortingTypes = {
     ReverseAlphabeticalOrder: 3,
 };
 
-const App = {
-    data() {
-        return {
-            editorBusy: false,
-            nextId: 1,
-            inputValue: "",
-            tempText: "",
-            sortingIndexNow: SortingTypes.AscendingNumbers,
-            sortings: [
-                "Ascending numbers",
-                "Descending numbers",
-                "In alphabetical order",
-                "In reverse alphabetical order",
-            ],
-            items: [],
-        };
-    },
+const app = Vue.createApp({
+    data: () => ({
+        editorBusy: false,
+        nextId: 1,
+        inputValue: "",
+        tempText: "",
+        sortingIndexNow: SortingTypes.AscendingNumbers,
+        sortings: [
+            "Ascending numbers",
+            "Descending numbers",
+            "In alphabetical order",
+            "In reverse alphabetical order",
+        ],
+        items: [],
+    }),
     methods: {
-        addNewItem(event) {
-            event.preventDefault();
-
+        addNewItem() {
             if (!checkNameValidity(this.inputValue)) {
                 alertInvalidName();
                 return;
@@ -65,10 +61,9 @@ const App = {
                     break;
             }
         },
-        removeItem(event, id) {
-            const arrIndex =
-                event.target.closest("li").getAttribute("data-id") - 1;
-            this.items.splice(arrIndex, 1);
+        removeItem(item) {
+            const itemIndex = this.items.indexOf(item);
+            this.items.splice(itemIndex, 1);
             this.nextId--;
         },
         activeEditing(item) {
@@ -94,9 +89,7 @@ const App = {
             this.editorBusy = false;
         },
     },
-};
-
-const app = Vue.createApp(App);
+});
 
 app.mount("#app");
 
