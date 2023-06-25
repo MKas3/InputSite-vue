@@ -1,0 +1,72 @@
+body {
+    background-color: #010307;
+    text-align: center;
+    color: #dde8f1;
+    min-width: 30em;
+}
+
+li {
+    padding-bottom: 0.25em;
+}
+
+li:hover {
+    color: #74797e;
+    transition: 0.15s;
+}
+
+li label,
+li input {
+    background-color: #010307;
+    width: 50%;
+    line-height: 1.5em;
+    word-wrap: break-word;
+}
+
+li input {
+    color: #74797e;
+}
+
+.ol-input {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.form-check {
+    width: 50%;
+    margin: auto;
+}
+
+.form-check:hover {
+    color: #74797e;
+    transition: 0.15s;
+}
+
+.main-ol {
+    margin-top: 5%;
+}
+
+.main-ol ol li::before {
+    content: attr(data-id)". ";
+}
+
+.main-ol ol {
+    text-align: left;
+    width: 50%;
+    margin: auto;
+    word-wrap: break-word;
+    list-style: none;
+}
+
+.btn-sm {
+    float: right;
+    font-size: xx-small;
+    margin-right: 0.5em;
+}
+
+.hide {
+    display: none;
+}
+
+
