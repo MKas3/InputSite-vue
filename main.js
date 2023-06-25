@@ -35,31 +35,6 @@ const app = Vue.createApp({
             });
             this.inputValue = "";
             this.nextId++;
-            this.sortList();
-        },
-        changeSorting(index) {
-            this.sortingIndexNow = index;
-            this.sortList();
-        },
-        sortList() {
-            if (this.items.length < 2) return;
-
-            switch (this.sortingIndexNow) {
-                case SortingTypes.AscendingNumbers:
-                    this.items.sort((a, b) => a.id - b.id);
-                    break;
-                case SortingTypes.DescendingNumbers:
-                    this.items.sort((a, b) => b.id - a.id);
-                    break;
-                case SortingTypes.AlphabeticalOrder:
-                    this.items.sort((a, b) => a.text.localeCompare(b.text));
-                    break;
-                case SortingTypes.ReverseAlphabeticalOrder:
-                    this.items.sort((a, b) => b.text.localeCompare(a.text));
-                    break;
-                default:
-                    break;
-            }
         },
         removeItem(item) {
             const itemIndex = this.items.indexOf(item);
@@ -76,7 +51,6 @@ const app = Vue.createApp({
             item.isEdited = false;
             if (checkNameValidity(item.inputValue)) {
                 item.text = item.inputValue;
-                this.sortList();
             } else {
                 item.inputValue = this.tempText;
                 alertInvalidName();
@@ -87,6 +61,24 @@ const app = Vue.createApp({
             item.isEdited = false;
             item.inputValue = this.tempText;
             this.editorBusy = false;
+        },
+    },
+    computed: {
+        sortedItems() {
+            switch (this.sortingIndexNow) {
+                case SortingTypes.AscendingNumbers:
+                    return this.items.sort((a, b) => a.id - b.id);
+                case SortingTypes.DescendingNumbers:
+                    return this.items.sort((a, b) => b.id - a.id);
+                case SortingTypes.AlphabeticalOrder:
+                    return this.items.sort((a, b) =>
+                        a.text.localeCompare(b.text)
+                    );
+                case SortingTypes.ReverseAlphabeticalOrder:
+                    return this.items.sort((a, b) =>
+                        b.text.localeCompare(a.text)
+                    );
+            }
         },
     },
 });

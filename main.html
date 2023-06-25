@@ -42,7 +42,7 @@
                         type="radio"
                         name="flexRadioDefault"
                         checked
-                        v-on:input="changeSorting(index)"
+                        v-on:input="sortingIndexNow = index"
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                         {{ sorting }}
@@ -55,7 +55,7 @@
                 <ol class="main-ol container w-50">
                     <li
                         class="col text-center pb-1"
-                        v-for="item in items"
+                        v-for="item in sortedItems"
                         :data-id="item.id"
                     >
                         <label
